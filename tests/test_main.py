@@ -23,13 +23,6 @@ def Shell(*args, **kwargs):
 @pytest.fixture
 def shell(xonsh_builtins, monkeypatch):
     """Xonsh Shell Mock"""
-    if hasattr(builtins, "__xonsh__"):
-        builtins.__xonsh__.unlink_builtins()
-        del builtins.__xonsh__
-    for xarg in dir(builtins):
-        if "__xonsh_" in xarg:
-            delattr(builtins, xarg)
-    gc.collect()
     Shell.shell_type_aliases = {"rl": "readline"}
     monkeypatch.setattr(xonsh.main, "Shell", Shell)
 
